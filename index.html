@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Telefones</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 300px;
+    }
+    h1 {
+      color: #333;
+    }
+    .count {
+      font-size: 2em;
+      color: #4caf50;
+      margin-top: 20px;
+    }
+    .refresh-btn {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #836FFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .refresh-btn:hover {
+      background-color: #211951;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Quantidade de Telefones</h1>
+    <div id="phoneCount" class="count">Carregando...</div>
+    <button class="refresh-btn" onclick="refreshData()">Atualizar</button>
+  </div>
+
+  <script>
+    async function fetchPhoneCount() {
+      try {
+        const response = await fetch('http://localhost:3000/phone-count');
+        const data = await response.json();
+        document.getElementById('phoneCount').innerText = data.phoneCount;
+      } catch (error) {
+        document.getElementById('phoneCount').innerText = 'Erro ao carregar os dados';
+      }
+    }
+
+    function refreshData() {
+      fetchPhoneCount();
+    }
+
+    // Carregar os dados assim que a página carregar
+    window.onload = fetchPhoneCount;
+  </script>
+</body>
+</html>
